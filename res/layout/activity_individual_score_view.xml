@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/Black"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+    tools:context="cric_grab.ashok.android.cric_grap.IndividualScoreView">
+
+    <TextView
+        android:id="@+id/failedText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="No Score Records Found"
+        android:textColor="@color/BlueViolet"
+        android:textStyle="bold"
+        android:typeface="serif"
+        android:visibility="gone" />
+
+
+    <LinearLayout
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:background="@color/Blueee"
+        android:layout_height="48dp"
+        android:layout_marginBottom="10dp"
+        android:orientation="horizontal"
+        android:paddingBottom="10dp"
+        android:paddingTop="10sp">
+
+        <TextView
+
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="NAME"
+            android:textColor="@color/WhiteSmoke"
+            android:textStyle="bold"
+            android:typeface="serif" />
+
+        <TextView
+
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="BALL"
+            android:textColor="@color/WhiteSmoke"
+            android:textStyle="bold"
+            android:typeface="serif" />
+
+
+        <TextView
+
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="SCORE"
+            android:textColor="@color/WhiteSmoke"
+            android:textStyle="bold"
+            android:typeface="serif" />
+
+        <TextView
+
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="TYPE"
+            android:textColor="@color/WhiteSmoke"
+            android:textStyle="bold"
+            android:typeface="serif" />
+
+        <TextView
+
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="INNINGS"
+            android:textColor="@color/WhiteSmoke"
+            android:textStyle="bold"
+            android:typeface="serif" />
+
+
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/individualList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:divider="@color/Blue"
+        android:dividerHeight="2dp"
+        android:fadeScrollbars="true"
+        android:fadingEdge="vertical"
+
+        android:footerDividersEnabled="true"
+        android:scrollbarStyle="outsideOverlay"></ListView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:orientation="horizontal"
+        android:background="@color/Blueee"
+        android:layout_marginTop="10dp"
+        android:padding="10dp">
+
+
+        <TextView
+            android:id="@+id/setOver"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Over"
+            android:textColor="@color/WhiteSmoke"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:typeface="serif" />
+
+
+        <TextView
+            android:id="@+id/setScore"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Scer"
+            android:textColor="@color/WhiteSmoke"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:typeface="serif" />
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

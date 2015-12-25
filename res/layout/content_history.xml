@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="3dp"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="cric_grab.ashok.android.cric_grap.History"
+    tools:showIn="@layout/activity_history">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:drawable/picture_frame"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/chooseDate"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:layout_weight="1"
+            android:background="@android:drawable/editbox_background_normal"
+            android:gravity="center"
+            android:hint="Choose Date"
+            android:windowSoftInputMode="stateHidden" />
+
+        <Button
+            android:id="@+id/searchDate"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:background="@drawable/listselect"
+            android:drawableRight="@android:drawable/ic_menu_search"
+            android:text="Search" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/failedMessage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="No History Found. Try some other date"
+            android:typeface="serif" />
+
+        <Button
+            android:id="@+id/showAll"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="Show All" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/listTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <TextView
+
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="TEAM A"
+            android:textStyle="bold"
+            android:textColor="@color/BlueViolet"
+            android:typeface="serif" />
+
+        <TextView
+
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="TEAM B"
+            android:textColor="@color/BlueViolet"
+            android:textStyle="bold"
+            android:typeface="serif" />
+
+        <TextView
+
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="INNINGS"
+            android:textStyle="bold"
+            android:textColor="@color/BlueViolet"
+            android:typeface="serif" />
+
+        <TextView
+
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="@color/BlueViolet"
+            android:text="OVER" />
+        <TextView
+
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="@color/BlueViolet"
+            android:text="DATE" />
+
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/listHistory"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:divider="@color/BlueViolet"
+        android:dividerHeight="1dp"
+        android:fadeScrollbars="true"
+        android:background="@drawable/listselect"
+        android:fadingEdge="vertical"
+        android:footerDividersEnabled="true"
+        android:scrollbarStyle="outsideInset">
+
+    </ListView>
+
+</LinearLayout>
