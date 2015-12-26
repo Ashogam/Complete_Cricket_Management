@@ -433,7 +433,7 @@ public class Scorum extends AppCompatActivity implements OnItemSelectedListener 
                         extra_type_value = extra_type.getSelectedItem().toString();
                         View focusView = null;
                         if (!TextUtils.isEmpty(extra_ball) && !TextUtils.isEmpty(extra_score)) {
-                            Toast.makeText(Scorum.this, extra_ball + " " + extra_score + " " + extra_spinner, Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(Scorum.this, extra_ball + " " + extra_score + " " + extra_spinner, Toast.LENGTH_SHORT).show();
                             try {
                                 scoreInformation.open();
                                 long result = scoreInformation.inserExtraScore(extra_spinner, extra_ball, extra_score, DashBoard.MATCH_NUMBER, created_Date,extra_type_value);

@@ -475,7 +475,7 @@ public class Player_Score_Information {
                 db.execSQL(CREATE_TABLE);
                 db.execSQL(CREATE_EXTRA_TABLE);
                 db.execSQL(CREATE_DASH_TABLE);
-                Toast.makeText(context, "Table Created", Toast.LENGTH_SHORT).show();
+
                 Log.i(TAG, "Table Created");
 
             } catch (SQLException e
@@ -494,7 +494,7 @@ public class Player_Score_Information {
                 db.execSQL(Drop_EXTRA_TABLE);
                 db.execSQL(Drop_Dash_TABLE);
 
-                Toast.makeText(context, "Table Upgraded", Toast.LENGTH_SHORT).show();
+
                 onCreate(db);
                 Log.i(TAG, "Table upgraded");
 

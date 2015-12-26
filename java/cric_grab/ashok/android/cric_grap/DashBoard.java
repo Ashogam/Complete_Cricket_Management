@@ -345,6 +345,9 @@ public class DashBoard extends AppCompatActivity
             Intent intent = new Intent(DashBoard.this, Score_Entry.class);
             intent.putExtra("TitleBar", "Send Message");
             startActivity(intent);
+        }else if(id==R.id.nav_remove){
+            Intent intent = new Intent(DashBoard.this, Score_Entry.class);
+            startActivity(intent);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

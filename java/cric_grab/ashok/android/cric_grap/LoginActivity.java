@@ -14,8 +14,10 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.app.LoaderManager.LoaderCallbacks;
+
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+
 import android.content.CursorLoader;
 import android.content.Loader;
 import android.database.Cursor;
@@ -90,7 +92,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         txtForgotPassowrd = (TextView) findViewById(R.id.txtForgotPassowrd);
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         populateAutoComplete();
-        checkRemember= (CheckBox) findViewById(R.id.checkRemember);
+        checkRemember = (CheckBox) findViewById(R.id.checkRemember);
         mPasswordView = (EditText) findViewById(R.id.password);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -120,6 +122,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         txtForgotPassowrd.setOnClickListener(new OnClickListener() {
             int count = 0;
+
             @Override
             public void onClick(View v) {
 
@@ -175,7 +178,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                                             }
                                             if (count == 0) {
                                                 Log.d("Result", username + password + email);
-                                                new Register().execute(username, email,password);
+                                                new Register().execute(username, email, password);
                                             }
                                         }
                                     }
@@ -223,16 +226,17 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     @Override
     protected void onStart() {
         super.onStart();
-        Log.i("onStart","Shared preference");
-        SharedPreferences sharedPreferences=getSharedPreferences("login_authentication",MODE_PRIVATE);
-        Boolean aBoolean=sharedPreferences.getBoolean("CheckBoxStatus",false);
-        Log.i("onStart","Shared preference"+aBoolean);
-        Log.i("onStart","Shared preference"+sharedPreferences.getString("UserName",""));Log.i("onStart","Shared preference"+sharedPreferences.getString("Password",""));
+        Log.i("onStart", "Shared preference");
+        SharedPreferences sharedPreferences = getSharedPreferences("login_authentication", MODE_PRIVATE);
+        Boolean aBoolean = sharedPreferences.getBoolean("CheckBoxStatus", false);
+        Log.i("onStart", "Shared preference" + aBoolean);
+        Log.i("onStart", "Shared preference" + sharedPreferences.getString("UserName", ""));
+        Log.i("onStart", "Shared preference" + sharedPreferences.getString("Password", ""));
 
-        if(aBoolean==true){
-            mEmailView.setText(sharedPreferences.getString("UserName",""));
-            mPasswordView.setText(sharedPreferences.getString("Password",""));
-        }else{
+        if (aBoolean == true) {
+            mEmailView.setText(sharedPreferences.getString("UserName", ""));
+            mPasswordView.setText(sharedPreferences.getString("Password", ""));
+        } else {
 
         }
     }
@@ -408,14 +412,17 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     @Override
     public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
-        List<String> emails = new ArrayList<>();
-        cursor.moveToFirst();
-        while (!cursor.isAfterLast()) {
-            emails.add(cursor.getString(ProfileQuery.ADDRESS));
-            cursor.moveToNext();
+        try {
+            List<String> emails = new ArrayList<>();
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()) {
+                emails.add(cursor.getString(ProfileQuery.ADDRESS));
+                cursor.moveToNext();
+            }
+            addEmailsToAutoComplete(emails);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-
-        addEmailsToAutoComplete(emails);
     }
 
     @Override
@@ -428,7 +435,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         ArrayAdapter<String> adapter =
                 new ArrayAdapter<>(LoginActivity.this,
                         android.R.layout.simple_dropdown_item_1line, emailAddressCollection);
-        Log.e("ArrayAdapter","Result"+emailAddressCollection.toString()+"-"+emailAddressCollection.size());
+        Log.e("ArrayAdapter", "Result" + emailAddressCollection.toString() + "-" + emailAddressCollection.size());
         mEmailView.setAdapter(adapter);
     }
 
@@ -507,8 +514,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         private final String mEmail;
         private final String mPassword;
-        private boolean status=false;
+        private boolean status = false;
         private ProgressDialog myProgressDialog;
+
         UserLoginTask(String email, String password) {
             mEmail = email;
             mPassword = password;
@@ -535,9 +543,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 // Simulate network access.
                 Thread.sleep(2000);
                 Log.d("Email and Passowrd", mEmail + " " + mPassword);
-                status= sqLiteManagement.userLoginCheck(mEmail, mPassword);
+                status = sqLiteManagement.userLoginCheck(mEmail, mPassword);
             } catch (Exception e) {
-                Log.d("Exception","Error from user logn");
+                Log.d("Exception", "Error from user logn");
                 return false;
             }
             sqLiteManagement.close();
@@ -560,17 +568,17 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             myProgressDialog.dismiss();
 
             if (success) {
-                Log.v("CheckBox Status","Check Box Status "+checkRemember.isChecked());
-                if(checkRemember.isChecked()){
-                    Log.w("Shared Preference","______Email_______"+mEmail+"_________Password_________"+mPassword);
-                    SharedPreferences sharedPreferences=getSharedPreferences("login_authentication",MODE_PRIVATE);
-                    SharedPreferences.Editor editor=sharedPreferences.edit();
-                    editor.putString("UserName",mEmail);
-                    editor.putString("Password",mPassword);
+                Log.v("CheckBox Status", "Check Box Status " + checkRemember.isChecked());
+                if (checkRemember.isChecked()) {
+                    Log.w("Shared Preference", "______Email_______" + mEmail + "_________Password_________" + mPassword);
+                    SharedPreferences sharedPreferences = getSharedPreferences("login_authentication", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("UserName", mEmail);
+                    editor.putString("Password", mPassword);
                     editor.putBoolean("CheckBoxStatus", true);
                     editor.apply();
                 }
-                Intent intent=new Intent(LoginActivity.this,DashBoard.class);
+                Intent intent = new Intent(LoginActivity.this, DashBoard.class);
                 startActivity(intent);
                 finish();
             } else {

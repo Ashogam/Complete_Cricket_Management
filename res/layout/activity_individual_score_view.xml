@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/Black"
+    android:id="@+id/linearIndividual"
     android:fitsSystemWindows="true"
     android:orientation="vertical"
     android:theme="@style/Theme.AppCompat.Light.NoActionBar"
@@ -16,9 +17,10 @@
         android:layout_gravity="center"
         android:gravity="center"
         android:text="No Score Records Found"
-        android:textColor="@color/BlueViolet"
+        android:textSize="20dp"
+        android:textColor="@color/MediumSlateBlue"
         android:textStyle="bold"
-        android:typeface="serif"
+        android:typeface="monospace"
         android:visibility="gone" />
 
 
@@ -110,6 +112,7 @@
         android:scrollbarStyle="outsideOverlay"></ListView>
 
     <LinearLayout
+        android:id="@+id/footLinear"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:orientation="horizontal"

@@ -1,22 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
 
     <TextView
-        android:padding="10dp"
-        android:textSize="20sp"
         android:id="@+id/userName"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
+        android:padding="10dp"
+        android:foregroundGravity="center"
         android:text="Ashok Babu"
-        android:textAllCaps="true"
-        android:background="@drawable/border_curve"
-        android:textColor="@color/DarkGray"
+        android:typeface="serif"
+        android:capitalize="sentences"
         android:textAppearance="?android:attr/textAppearanceListItemSmall"
-        android:textColorHighlight="@color/DarkGreen"
-         />
+        android:textColor="@color/Black"
+        android:textColorHighlight="@color/AntiqueWhite"
+        />
 
-</LinearLayout>
+    <CheckBox
+        android:visibility="gone"
+        android:id="@+id/removeCheck"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:scaleX="1"
+        android:scaleY="1"
+        android:gravity="center"
+        android:layout_marginRight="10dp"
+        android:layout_alignRight="@+id/userName"/>
+
+    <ImageView
+        android:visibility="gone"
+        android:src="@android:drawable/sym_action_call"
+        android:id="@+id/callImage"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:gravity="center"
+        android:layout_marginRight="10dp"
+        android:layout_alignRight="@+id/userName"/>
+
+    <ImageView
+        android:visibility="gone"
+        android:src="@android:drawable/sym_action_email"
+        android:id="@+id/MessageImage"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:gravity="center"
+        android:layout_marginRight="10dp"
+        android:layout_alignRight="@+id/userName"/>
+
+</RelativeLayout>

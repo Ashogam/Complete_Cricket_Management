@@ -92,6 +92,33 @@ public class Add_player_SqliteManagement {
 
     }
 
+    public Long removePlayer(JSONArray jsonArray) {
+
+
+        long result = -1;
+        try {
+            for(int i=0;i<jsonArray.length();i++){
+                JSONObject jsonObject=jsonArray.getJSONObject(i);
+                result = sqLiteDatabase.delete(DBHelper.TABLE_NAME,DBHelper.NAME+" =? AND "+DBHelper.MOBILE_NUMBER+" =?",new String[]{jsonObject.getString("NAME"),jsonObject.getString("NUMBER")});
+                Log.i("removePlayerFOR", "Result" + result);
+            }
+
+            Log.i("removePlayer", "Result" + result);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            Log.w("Exception", "________Result_____" + result);
+            return result;
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
+
+    }
+
+
+
     public JSONArray getdetails() {
         String[] columns = {DBHelper.NAME,DBHelper.MOBILE_NUMBER};
         Cursor cursor = sqLiteDatabase.query(DBHelper.TABLE_NAME, columns, null, null, null, null, null, null);

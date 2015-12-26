@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -26,7 +27,7 @@ import java.util.ArrayList;
 public class IndividualScoreView extends AppCompatActivity {
     ListView individualList;
     TextView failedText,setOver,setScore;
-    LinearLayout title;
+    LinearLayout title,footLinear;
     private Player_Score_Information information;
     IndividualAdapt individualAdapt;
     private ArrayList<IndividualGetSet> arrayList;
@@ -91,12 +92,19 @@ public class IndividualScoreView extends AppCompatActivity {
                         Log.w("PostExecute", "" + individualGetSets.size() + "++++++ " + individualGetSets + "");
                         failedText.setVisibility(View.GONE);
                         title.setVisibility(View.VISIBLE);
+                        footLinear.setVisibility(View.VISIBLE);
                         individualAdapt = new IndividualAdapt(IndividualScoreView.this, R.layout.individual_listview, individualGetSets);
                         individualList.setAdapter(individualAdapt);
                         doSetValues();
                     } else {
+                        LinearLayout linearLayout= (LinearLayout) findViewById(R.id.linearIndividual);
                         failedText.setVisibility(View.VISIBLE);
+                        failedText.setText("Oops! No scores were found for this match. Try to save the scores.\n Thank You");
+                        linearLayout.setGravity(Gravity.CENTER);
+
+                        footLinear.setVisibility(View.GONE);
                         title.setVisibility(View.GONE);
+
                     }
                 }catch(Exception e){
                     e.printStackTrace();
@@ -131,6 +139,7 @@ public class IndividualScoreView extends AppCompatActivity {
         failedText
                 = (TextView) findViewById(R.id.failedText);
         title= (LinearLayout) findViewById(R.id.title);
+        footLinear= (LinearLayout) findViewById(R.id.footLinear);
         information=new Player_Score_Information(IndividualScoreView.this);
         setOver=(TextView) findViewById(R.id.setOver);
         setScore=(TextView) findViewById(R.id.setScore);

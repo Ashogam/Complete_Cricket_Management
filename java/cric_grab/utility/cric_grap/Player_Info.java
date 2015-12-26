@@ -9,6 +9,15 @@ public class Player_Info {
 
     private String player_name;
     private String player_mobile_number;
+    private boolean checkBoxStatus;
+
+    public boolean getCheckBoxStatus() {
+        return checkBoxStatus;
+    }
+
+    public void setCheckBoxStatus(boolean checkBoxStatus) {
+        this.checkBoxStatus = checkBoxStatus;
+    }
 
     public String getPlayer_mobile_number() {
         return player_mobile_number;

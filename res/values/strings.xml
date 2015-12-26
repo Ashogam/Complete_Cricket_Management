@@ -123,4 +123,5 @@
     <string name="title_activity_scorum">Scorum</string>
     <string name="extra">Extras</string>
     <string name="title_activity_history">History</string>
+    <string name="title_activity_show__player">Show_Player</string>
 </resources>

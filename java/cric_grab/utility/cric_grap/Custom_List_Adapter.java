@@ -20,10 +20,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.CheckBox;
 
 import cric_grab.Navication_selection_class.cric_grap.Score_Entry;
+
 import com.ashok.android.cric_grap.R;
+
 import cric_grab.ashok.android.cric_grap.ScoreBoard;
+
+import android.widget.ImageView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,18 +42,19 @@ public class Custom_List_Adapter extends ArrayAdapter<Player_Info> {
     Holder holder = null;
     private Context context;
     private int resource;
+    boolean[] checkBoxState;
 
     public Custom_List_Adapter(Context context, int resource, ArrayList<Player_Info> objects) {
         super(context, resource, objects);
         this.context = context;
         this.resource = resource;
         this.items = objects;
-
+        checkBoxState = new boolean[items.size()];
 
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
 
         try {
             View vi = convertView;
@@ -59,6 +65,16 @@ public class Custom_List_Adapter extends ArrayAdapter<Player_Info> {
                 vi = inflater.inflate(resource, parent, false);
                 holder = new Holder();
                 holder.username = (TextView) vi.findViewById(R.id.userName);
+                holder.removeCheck = (CheckBox) vi.findViewById(R.id.removeCheck);
+                holder.callImage = (ImageView) vi.findViewById(R.id.callImage);
+                holder.MessageImage = (ImageView) vi.findViewById(R.id.MessageImage);
+                if (Score_Entry.CHECKSTATUS == true) {
+                    holder.removeCheck.setVisibility(View.VISIBLE);
+                } else if (Score_Entry.CALLSTATUS == true) {
+                    holder.callImage.setVisibility(View.VISIBLE);
+                } else if (Score_Entry.MESSAGESTATUS == true) {
+                    holder.MessageImage.setVisibility(View.VISIBLE);
+                }
                 vi.setTag(holder);
 
             } else {
@@ -68,9 +84,27 @@ public class Custom_List_Adapter extends ArrayAdapter<Player_Info> {
             if (items.size() <= 0) {
                 holder.username.setText("No Data");
             } else {
-
+                holder.removeCheck.setChecked(checkBoxState[position]);
                 holder.username.setText(items.get(position).getPlayer_name());
-                vi.setOnClickListener(new OnItemClick(position));
+
+                holder.username.setOnClickListener(new OnItemClick(position));
+                holder.removeCheck.setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View v) {
+
+                        if (((CheckBox) v).isChecked()) {
+                            checkBoxState[position] = true;
+                            items.get(position).setCheckBoxStatus(true);
+
+                        } else {
+                            checkBoxState[position] = false;
+                            items.get(position).setCheckBoxStatus(false);
+                        }
+
+                    }
+
+                });
             }
             return vi;
         } catch (Exception vi) {
@@ -83,6 +117,9 @@ public class Custom_List_Adapter extends ArrayAdapter<Player_Info> {
     public class Holder {
 
         TextView username;
+        CheckBox removeCheck;
+        ImageView callImage, MessageImage;
+
     }
 
 
@@ -97,6 +134,7 @@ public class Custom_List_Adapter extends ArrayAdapter<Player_Info> {
         @Override
         public void onClick(View v) {
             // TODO Auto-generated method stub
+
             if (Score_Entry.title != null && !TextUtils.isEmpty(Score_Entry.title)) {
 
                 switch (Score_Entry.title) {
@@ -173,9 +211,7 @@ public class Custom_List_Adapter extends ArrayAdapter<Player_Info> {
 
             } else {
                 Log.i("Switching Activity ", "Passing inttent");
-                Intent intent = new Intent(context.getApplicationContext(), ScoreBoard.class);
-                intent.putExtra("mPosition", mPosition);
-                context.startActivity(intent);
+
 
             }
 

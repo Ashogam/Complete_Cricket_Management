@@ -3,15 +3,19 @@ package cric_grab.Navication_selection_class.cric_grap;
 import android.app.ActionBar;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -52,6 +56,22 @@ public class Add_player extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_player);
         initialize();
+/*
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Do you want to Remove players?", Snackbar.LENGTH_LONG)
+                        .setAction("Remove", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+
+                            }
+                        }).show();
+            }
+        });
+*/
 
 
         SharedPreferences sharedPreference = getSharedPreferences("Contacts", MODE_PRIVATE);
@@ -118,7 +138,7 @@ public class Add_player extends AppCompatActivity {
     private boolean edtTextCheck() {
         if (mNumber.length() > 0) {
             Log.e("Pin", "First Con");
-            if (mNumber.length() == 10 || mNumber.length() == 12 && mNumber.length() != 11) {
+            if (mNumber.length() == 10) {
                 Log.e("Pin", "True");
                 return true;
             } else {
@@ -247,6 +267,10 @@ public class Add_player extends AppCompatActivity {
                 Log.d("OnPostExecuteMethod", "aVoid" + aVoid);
                 if (aVoid > 0) {
                     Toast.makeText(Add_player.this, "Saved Successfully", Toast.LENGTH_SHORT).show();
+                    mName.setText(null);
+                    mNumber.setText(null);
+                    View focus=mName;
+                    focus.requestFocus();
                     Add_player_SqliteManagement management = new Add_player_SqliteManagement(Add_player.this);
                     management.open();
                     try {
@@ -328,6 +352,12 @@ public class Add_player extends AppCompatActivity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.remove,menu);
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
         int id = item.getItemId();
@@ -335,6 +365,10 @@ public class Add_player extends AppCompatActivity {
             // Respond to the action bar's Up/Home button
             case android.R.id.home:
                 NavUtils.navigateUpFromSameTask(Add_player.this);
+                return true;
+            case R.id.removeMenu:
+                Intent intent = new Intent(Add_player.this, Score_Entry.class);
+                startActivity(intent);
                 return true;
         }
         /*if (id == R.id.action_search) {

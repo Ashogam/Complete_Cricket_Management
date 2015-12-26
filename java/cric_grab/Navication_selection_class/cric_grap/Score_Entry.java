@@ -11,19 +11,23 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Button;
 
 import com.ashok.android.cric_grap.R;
+
 import cric_grab.sqlite.cric_grap.Add_player_SqliteManagement;
 import cric_grab.utility.cric_grap.Custom_List_Adapter;
 import cric_grab.utility.cric_grap.Player_Info;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -33,39 +37,120 @@ public class Score_Entry extends AppCompatActivity {
 
     private ListView listPlayer;
     private TextView txtErrorMessage;
-    public static String title=null;
+    public static String title = null;
     Custom_List_Adapter listAdapter;
-
-
+    private Button removeButton;
+    Add_player_SqliteManagement management = null;
+    public static boolean CHECKSTATUS = false;
+    public static boolean CALLSTATUS = false;
+    public static boolean MESSAGESTATUS = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_score__entry);
-        Intent intent=getIntent();
-        title=intent.getStringExtra("TitleBar");
+        listPlayer = (ListView) findViewById(R.id.listPlayer);
+        txtErrorMessage = (TextView) findViewById(R.id.txtErrorMessage);
+        removeButton = (Button) findViewById(R.id.removeButton);
+        management=new Add_player_SqliteManagement(Score_Entry.this);
+        Intent intent = getIntent();
+        title = intent.getStringExtra("TitleBar");
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
-        if(!TextUtils.isEmpty(title)){
-            Log.v("Tool Bar intent "," Is not empty"+ title);
+        if (!TextUtils.isEmpty(title)) {
+            Log.v("Tool Bar intent ", " Is not empty" + title);
             toolbar.setTitle(title);
-        }else{
-            Log.v("Tool Bar intent else "," Is empty");
-            toolbar.setTitle("Score Entry");
+            if(title.equalsIgnoreCase("Caller Screen")){
+                CALLSTATUS=true; MESSAGESTATUS=false;CHECKSTATUS=false;}
+            if(title.equalsIgnoreCase("Send Message")){
+                MESSAGESTATUS=true;CALLSTATUS=false;CHECKSTATUS=false;}
+            removeButton.setVisibility(View.GONE);
+        } else {
+            Log.v("Tool Bar intent else ", " Is empty");
+            toolbar.setTitle("Customize Player");
+            removeButton.setVisibility(View.VISIBLE);
+            CHECKSTATUS = true;
+            MESSAGESTATUS=false;
+            CALLSTATUS=false;
         }
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        listPlayer = (ListView) findViewById(R.id.listPlayer);
-        txtErrorMessage= (TextView) findViewById(R.id.txtErrorMessage);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+
+       /* FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();*/
-                Intent intent = new Intent(Score_Entry.this, Add_player.class);
-                startActivity(intent);
+                *//*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();*//*
+
+            }
+        });
+*/
+        removeButton.setOnClickListener(new View.OnClickListener() {
+            Player_Info info;
+
+            @Override
+            public void onClick(View v) {
+                JSONArray arrayData = new JSONArray();
+                Log.e("RemoveButtonClick", listAdapter.getCount() + "");
+                try {
+                    for (int i = 0; i < listAdapter.getCount(); i++) {
+                        info = listAdapter.getItem(i);
+                        JSONObject jsonObject = new JSONObject();
+
+                        if (info.getCheckBoxStatus() == true) {
+                            Log.e("removeButton", info.getPlayer_name());
+                            Log.e("removeButton", info.getPlayer_mobile_number());
+                            jsonObject.put("NAME", info.getPlayer_name());
+                            jsonObject.put("NUMBER", info.getPlayer_mobile_number());
+                            arrayData.put(jsonObject);
+                        }
+
+                    }
+                    Log.e("ArrayData",arrayData.length()+"");
+                    if(arrayData.length()>0){
+                        new AsyncTask<JSONArray,Void,Void>(){
+                            ProgressDialog dialog=null;
+                            @Override
+                            protected void onPreExecute() {
+                                super.onPreExecute();
+                                dialog=new ProgressDialog(Score_Entry.this);
+                                dialog.setMessage("Deleting..... Please Wait");
+                                dialog.setCancelable(false);
+                                dialog.show();
+                            }
+
+                            @Override
+                            protected Void doInBackground(JSONArray... params) {
+                                try {
+                                    management.open();
+                                    management.removePlayer(params[0]);
+                                    Thread.sleep(500);
+                                } catch (InterruptedException e){
+                                    e.printStackTrace();
+                                } catch (Exception e){
+                                    e.printStackTrace();
+                                } finally {
+                                    management.close();
+                                }
+                                return null;
+                            }
+
+                            @Override
+                            protected void onPostExecute(Void aVoid) {
+                                super.onPostExecute(aVoid);
+                                dialog.dismiss();
+                                onResume();
+                            }
+                        }.execute(arrayData);
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
             }
         });
     }
@@ -76,15 +161,15 @@ public class Score_Entry extends AppCompatActivity {
         new AttachingList().execute();
     }
 
-    private class AttachingList extends AsyncTask<Void,Void,ArrayList<Player_Info>>{
-        Add_player_SqliteManagement management=null;
-        private ArrayList<Player_Info> player_infos=null;
+    private class AttachingList extends AsyncTask<Void, Void, ArrayList<Player_Info>> {
+
+        private ArrayList<Player_Info> player_infos = null;
         private ProgressDialog myProgressDialog;
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            player_infos=new ArrayList<>();
+            player_infos = new ArrayList<>();
             myProgressDialog = new ProgressDialog(
                     Score_Entry.this);
             myProgressDialog.setMessage("Loading.....");
@@ -95,15 +180,15 @@ public class Score_Entry extends AppCompatActivity {
 
         @Override
         protected ArrayList<Player_Info> doInBackground(Void... params) {
-            management=new Add_player_SqliteManagement(Score_Entry.this);
-            try{
+
+            try {
                 management.open();
-                Thread.sleep(1000);
+                Thread.sleep(250);
                 JSONArray jsonArray = management.getdetails();
                 if (jsonArray.length() > 0) {
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
-                        Player_Info player_info=new Player_Info();
+                        Player_Info player_info = new Player_Info();
                         player_info.setPlayer_name(jsonObject.getString("player_name"));
                         player_info.setPlayer_mobile_number(jsonObject.getString("player_number"));
                         Log.i("Json feed", jsonObject.getString("player_name") + "_____" + jsonObject.getString("player_number"));
@@ -113,11 +198,10 @@ public class Score_Entry extends AppCompatActivity {
 
                 return player_infos;
 
-            }catch (Exception e)
-            {
+            } catch (Exception e) {
                 e.printStackTrace();
-            }finally {
-                if(management!=null){
+            } finally {
+                if (management != null) {
                     management.close();
                 }
             }
@@ -128,32 +212,45 @@ public class Score_Entry extends AppCompatActivity {
         protected void onPostExecute(ArrayList<Player_Info> player_infos) {
             super.onPostExecute(player_infos);
             myProgressDialog.dismiss();
-            Log.d("Player Length","______Length of ArrayList_______"+player_infos.size());
-            if(player_infos==null){
-                LinearLayout LinearHead= (LinearLayout) findViewById(R.id.LinearHead);
+            Log.d("Player Length", "______Length of ArrayList_______" + player_infos.size());
+            if (player_infos.size() <= 0) {
+                LinearLayout LinearHead = (LinearLayout) findViewById(R.id.LinearHead);
                 txtErrorMessage.setText("Oops! There is no player in the List. Please ADD Players before you start the score management");
                 LinearHead.setGravity(Gravity.CENTER);
                 listPlayer.setVisibility(View.GONE);
+                removeButton.setVisibility(View.GONE);
                 txtErrorMessage.setVisibility(View.VISIBLE);
-            }else if(player_infos!=null){
+            } else if (player_infos.size() > 0) {
                 txtErrorMessage.setVisibility(View.GONE);
-                if(listPlayer.getVisibility()==View.GONE){
+                if (listPlayer.getVisibility() == View.GONE||removeButton.getVisibility()==View.GONE) {
                     listPlayer.setVisibility(View.VISIBLE);
+                    removeButton.setVisibility(View.VISIBLE);
                 }
-                Collections.sort(player_infos,Player_Info.comparator);
-                listAdapter=new Custom_List_Adapter(Score_Entry.this,R.layout.custom_list_items,player_infos);
+                Collections.sort(player_infos, Player_Info.comparator);
+                listAdapter = new Custom_List_Adapter(Score_Entry.this, R.layout.custom_list_items, player_infos);
                 listPlayer.setAdapter(listAdapter);
-            }else{
+            } else {
                 Toast.makeText(Score_Entry.this, "Something Went wrong", Toast.LENGTH_SHORT).show();
             }
         }
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.addplayer, menu);
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case android.R.id.home:
                 NavUtils.navigateUpFromSameTask(this);
+                break;
+            case R.id.action_add:
+                Intent intent = new Intent(Score_Entry.this, Add_player.class);
+                startActivity(intent);
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
