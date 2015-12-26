@@ -1,5 +1,6 @@
 package cric_grab.ashok.android.cric_grap;
 
+import android.app.ActionBar;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -40,7 +41,10 @@ public class PlayerAlone extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.playeralone);
         setViewById();
+
         mPosition = getIntent().getIntExtra("mPosition", 0);
+
+        getSupportActionBar().setTitle(IndividualAdapt.items.get(mPosition).getPLAYERNAME());
         Log.d("PlayerAlone", IndividualAdapt.items.get(mPosition).getPLAYERNAME());
         Log.d("PlayerAlone", IndividualAdapt.items.get(mPosition).getInnings());
         Log.d("PlayerAlone", IndividualScoreView.DATES);
