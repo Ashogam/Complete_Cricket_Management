@@ -6,6 +6,7 @@ import android.app.DialogFragment;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
+import android.os.PersistableBundle;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -25,6 +26,7 @@ import cric_grab.utility.cric_grap.HistoryGetSet;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -36,6 +38,7 @@ public class History extends AppCompatActivity {
     Custom_History_ListView history_listView;
     ListView listHistory;
     ArrayList<HistoryGetSet> arrayList;
+    private String date;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,7 +92,7 @@ public class History extends AppCompatActivity {
                 if (TextUtils.isEmpty(chooseDate.getText().toString())) {
                     chooseDate.setError("Choose Date");
                 } else {
-                    final String date = chooseDate.getText().toString();
+                    date = chooseDate.getText().toString();
                     setDataDoinBack(date);
                 }
             }
@@ -150,22 +153,29 @@ public class History extends AppCompatActivity {
             @Override
             protected void onPostExecute(ArrayList<HistoryGetSet> historyGetSet) {
                 super.onPostExecute(historyGetSet);
-                if (historyGetSet != null) {
-                    failedMessage.setVisibility(View.GONE);
-                    listTitle.setVisibility(View.VISIBLE);
-                    listHistory.setVisibility(View.VISIBLE);
-                    history_listView = new Custom_History_ListView(History.this, R.layout.customlistview, historyGetSet);
-                    listHistory.setAdapter(history_listView);
-                } else {
-                    failedMessage.setVisibility(View.VISIBLE);
-                    listTitle.setVisibility(View.GONE);
-                    listHistory.setVisibility(View.GONE);
-                }
+                setListAdapter(historyGetSet);
+
             }
         }.execute(date_search);
 
 
     }
+
+    private void setListAdapter(ArrayList<HistoryGetSet> historyGetSet){
+        if (historyGetSet != null) {
+            failedMessage.setVisibility(View.GONE);
+            listTitle.setVisibility(View.VISIBLE);
+            listHistory.setVisibility(View.VISIBLE);
+            history_listView = new Custom_History_ListView(History.this, R.layout.customlistview, historyGetSet);
+            listHistory.setAdapter(history_listView);
+        } else {
+            failedMessage.setVisibility(View.VISIBLE);
+            listTitle.setVisibility(View.GONE);
+            listHistory.setVisibility(View.GONE);
+        }
+    }
+
+
 
     public static class DatePickerFragment extends DialogFragment
             implements DatePickerDialog.OnDateSetListener {

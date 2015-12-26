@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.ashok.android.cric_grap.R;
 
@@ -18,28 +17,27 @@ import java.util.ArrayList;
 import cric_grab.ashok.android.cric_grap.PlayerAlone;
 
 /**
- * Created by ANDROID on 10-12-2015.
+ * Created by ANDROID on 26-12-2015.
  */
-public class IndividualAdapt extends ArrayAdapter<IndividualGetSet>{
+public class IndividualAloneAdapt extends ArrayAdapter<IndividualGetSet>  {
+
 
     /**
-     * Created by ANDROID on 09-12-2015.
+     * Created by ANDROID on 10-12-2015.
      */
-
-
-        public static ArrayList<IndividualGetSet> items;
+        private ArrayList<IndividualGetSet> items;
         Holder holder = null;
         private Context context;
         private int resource;
 
-        public IndividualAdapt(Context context, int resource, ArrayList<IndividualGetSet> objects) {
+        public IndividualAloneAdapt(Context context, int resource, ArrayList<IndividualGetSet> objects) {
             super(context, resource, objects);
             this.context = context;
             this.resource = resource;
             this.items = objects;
 
             for(int i=0;i<items.size();i++){
-                Log.d("for",items.get(i).getPLAYERNAME());
+                Log.d("for", items.get(i).getPLAYERNAME());
                 Log.d("for", items.get(i).getBALL_NUMBER());
                 Log.d("for",items.get(i).getSCORE());
             }
@@ -117,14 +115,14 @@ public class IndividualAdapt extends ArrayAdapter<IndividualGetSet>{
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-                Intent intent=new Intent(context, PlayerAlone.class);
-                intent.putExtra("mPosition",mPosition);
-                context.startActivity(intent);
+
 
             }
 
 
         }
+
+
 
 
 }

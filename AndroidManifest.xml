@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.ashok.android.cric_grap" >
+    package="com.ashok.android.cric_grap">
 
     <!-- To auto-complete the email text field in the login form with the user's emails -->
 
@@ -16,13 +16,13 @@
         android:icon="@drawable/teamlogo"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme" >
+
+        android:theme="@style/AppTheme">
         <activity
             android:name="cric_grab.ashok.android.cric_grap.Splash_Screen"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" >
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -36,14 +36,14 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name="cric_grab.Navication_selection_class.cric_grap.Add_player"
-            android:windowSoftInputMode="adjustResize|stateHidden"
-            android:label="@string/addPlayer" />
+            android:label="@string/addPlayer"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
             android:name="cric_grab.Navication_selection_class.cric_grap.Score_Entry"
             android:label="@string/title_activity_score__entry"
             android:parentActivityName="cric_grab.ashok.android.cric_grap.DashBoard"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" >
+            android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="cric_grab.ashok.android.cric_grap.DashBoard" />
@@ -53,7 +53,7 @@
             android:label="@string/title_activity_score_board"
             android:parentActivityName="cric_grab.Navication_selection_class.cric_grap.Score_Entry"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" >
+            android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="cric_grab.Navication_selection_class.cric_grap.Score_Entry" />
@@ -61,26 +61,27 @@
         <activity
             android:name="cric_grab.ashok.android.cric_grap.Contactus"
             android:label="@string/title_activity_scrolling"
-            android:theme="@style/AppTheme.NoActionBar" >
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name="cric_grab.ashok.android.cric_grap.Over_selection"
             android:label="@string/title_activity_over_selection"
-            android:theme="@style/AppTheme.NoActionBar" >
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name="cric_grab.ashok.android.cric_grap.Scorum"
             android:label="@string/title_activity_scorum"
-            android:theme="@style/AppTheme.NoActionBar"
             android:parentActivityName="cric_grab.ashok.android.cric_grap.Select_Over"
-            android:windowSoftInputMode="adjustResize|stateHidden" >
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustResize|stateHidden">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="cric_grab.ashok.android.cric_grap.Select_Over" />
         </activity>
-        <activity android:name="cric_grab.ashok.android.cric_grap.Select_Over"
+        <activity
+            android:name="cric_grab.ashok.android.cric_grap.Select_Over"
             android:label="Select Over"
-            android:parentActivityName="cric_grab.ashok.android.cric_grap.DashBoard">
+            android:parentActivityName="cric_grab.ashok.android.cric_grap.DashBoard"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="cric_grab.ashok.android.cric_grap.DashBoard" />
@@ -89,22 +90,26 @@
             android:name="cric_grab.ashok.android.cric_grap.History"
             android:label="@string/title_activity_history"
             android:parentActivityName="cric_grab.ashok.android.cric_grap.DashBoard"
-            android:theme="@style/AppTheme.NoActionBar" >
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="cric_grab.ashok.android.cric_grap.DashBoard" />
         </activity>
-        <activity android:name="cric_grab.ashok.android.cric_grap.IndividualScoreView"
+        <activity
+            android:name="cric_grab.ashok.android.cric_grap.IndividualScoreView"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
 
         </activity>
-        <activity android:name="com.google.android.gms.ads.AdActivity"
-            >
+        <activity android:name="com.google.android.gms.ads.AdActivity">
 
         </activity>
 
-        <meta-data android:name="com.google.gms.version"
-            android:value="@integer/google_play_services_version"/>
+        <meta-data
+            android:name="com.google.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+        <activity android:name="cric_grab.ashok.android.cric_grap.PlayerAlone" />
     </application>
 
 </manifest>

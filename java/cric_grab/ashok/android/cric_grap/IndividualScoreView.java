@@ -30,8 +30,8 @@ public class IndividualScoreView extends AppCompatActivity {
     private Player_Score_Information information;
     IndividualAdapt individualAdapt;
     private ArrayList<IndividualGetSet> arrayList;
-    int mpos;
-    String dates;
+    public static int mpos;
+    public static String DATES;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,7 +41,7 @@ public class IndividualScoreView extends AppCompatActivity {
         Intent intent=getIntent();
         mpos=intent.getIntExtra("position",0);
 
-        dates=Custom_History_ListView.items.get(mpos).getDATE();
+        DATES =Custom_History_ListView.items.get(mpos).getDATE();
         Log.e("Position", mpos + "+++++" + Custom_History_ListView.items.get(mpos).getINNINGS());
         Log.e("over", mpos + "+++++" + Custom_History_ListView.items.get(mpos).getOVER());
         Log.e("Date",""+Custom_History_ListView.items.get(mpos).getDATE());
@@ -58,8 +58,8 @@ public class IndividualScoreView extends AppCompatActivity {
             protected ArrayList<IndividualGetSet> doInBackground(Void... params) {
                 try{
                     information.open();
-                    //information.combineTableSet(Custom_History_ListView.items.get(mpos).getINNINGS(),dates);
-                    JSONArray array=information.combineTableSet(Custom_History_ListView.items.get(mpos).getINNINGS(), dates);
+
+                    JSONArray array=information.combineTableSet(Custom_History_ListView.items.get(mpos).getINNINGS(), DATES);
                     if(array!=null){
                         Log.w("arrayyyy", array.toString());
                         for(int i=0;i<array.length();i++){
@@ -86,16 +86,20 @@ public class IndividualScoreView extends AppCompatActivity {
             @Override
             protected void onPostExecute(ArrayList<IndividualGetSet> individualGetSets) {
                 super.onPostExecute(individualGetSets);
-
-                if(individualGetSets.size()>0){
-                    Log.w("PostExecute",""+individualGetSets.size()+"++++++ "+individualGetSets+"");
-                    failedText.setVisibility(View.GONE);
-                    title.setVisibility(View.VISIBLE);
-                    individualAdapt=new IndividualAdapt(IndividualScoreView.this,R.layout.individual_listview,individualGetSets);
-                    individualList.setAdapter(individualAdapt);
-                }else{
-                    failedText.setVisibility(View.VISIBLE);
-                    title.setVisibility(View.GONE);
+                try {
+                    if (individualGetSets.size() > 0) {
+                        Log.w("PostExecute", "" + individualGetSets.size() + "++++++ " + individualGetSets + "");
+                        failedText.setVisibility(View.GONE);
+                        title.setVisibility(View.VISIBLE);
+                        individualAdapt = new IndividualAdapt(IndividualScoreView.this, R.layout.individual_listview, individualGetSets);
+                        individualList.setAdapter(individualAdapt);
+                        doSetValues();
+                    } else {
+                        failedText.setVisibility(View.VISIBLE);
+                        title.setVisibility(View.GONE);
+                    }
+                }catch(Exception e){
+                    e.printStackTrace();
                 }
             }
         }.execute();
@@ -106,13 +110,19 @@ public class IndividualScoreView extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+
+    }
+
+    private void doSetValues(){
         try{
             information.open();
-            String QuickScore=information.combineScore(Custom_History_ListView.items.get(mpos).getINNINGS(), dates);
+            String QuickScore=information.combineScore(Custom_History_ListView.items.get(mpos).getINNINGS(), DATES);
             if(QuickScore!=null){
-            setScore.setText("Total Score : "+QuickScore);}else{setScore.setText("Total Score : NA");}
+                setScore.setText("Total Score : "+QuickScore);}else{setScore.setText("Total Score : NA");}
         }catch (Exception e){
             e.printStackTrace();
+        }finally {
+            information.close();
         }
     }
 

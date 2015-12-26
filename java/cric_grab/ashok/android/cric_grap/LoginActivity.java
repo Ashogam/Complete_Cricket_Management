@@ -5,6 +5,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -332,7 +333,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         } else {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
-            showProgress(true);
+            //showProgress(true);
             mAuthTask = new UserLoginTask(email, password);
             mAuthTask.execute((Void) null);
         }
@@ -452,6 +453,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     LoginActivity.this);
             myProgressDialog.setMessage("Please wait.....");
             myProgressDialog.setCancelable(false);
+
             myProgressDialog.show();
 
         }
@@ -506,10 +508,20 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         private final String mEmail;
         private final String mPassword;
         private boolean status=false;
-
+        private ProgressDialog myProgressDialog;
         UserLoginTask(String email, String password) {
             mEmail = email;
             mPassword = password;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            myProgressDialog = new ProgressDialog(
+                    LoginActivity.this);
+            myProgressDialog.setMessage("Logging in.....");
+            myProgressDialog.setCancelable(false);
+            myProgressDialog.show();
         }
 
         @Override
@@ -545,7 +557,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         @Override
         protected void onPostExecute(final Boolean success) {
             mAuthTask = null;
-            showProgress(false);
+            myProgressDialog.dismiss();
 
             if (success) {
                 Log.v("CheckBox Status","Check Box Status "+checkRemember.isChecked());
@@ -572,5 +584,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             showProgress(false);
         }
     }
+
+
 }
 

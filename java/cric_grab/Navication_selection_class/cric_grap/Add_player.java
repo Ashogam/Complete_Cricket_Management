@@ -20,6 +20,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.ashok.android.cric_grap.R;
+
 import cric_grab.sqlite.cric_grap.Add_player_SqliteManagement;
 import cric_grab.utility.cric_grap.Player_Info;
 
@@ -55,26 +56,26 @@ public class Add_player extends AppCompatActivity {
 
         SharedPreferences sharedPreference = getSharedPreferences("Contacts", MODE_PRIVATE);
         Set<String> number = sharedPreference.getStringSet("contact", null);
-        SharedPreferences pref=getSharedPreferences("myContact",MODE_PRIVATE);
-        Set<String> str=pref.getStringSet("key", null);
+        SharedPreferences pref = getSharedPreferences("myContact", MODE_PRIVATE);
+        Set<String> str = pref.getStringSet("key", null);
         try {
             Log.i("Checking", "displayContactName " + number.toString() + " " + number.size());
             Log.i("Checking", "displayContactName " + str.toString() + " " + str.size());
 
-            if (number!=null && str!=null) {
+            if ((number != null && str != null)||(number.size()>1&&str.size()>1)) {
                 List<String> contactNumber = new ArrayList<>(number);
                 Log.e("SharedPreference", "Result" + contactNumber.toString() + "-" + contactNumber.size());
                 contactNumber.removeAll(Collections.singleton(null));
                 ArrayAdapter<String> adapter =
                         new ArrayAdapter<String>(Add_player.this,
                                 android.R.layout.simple_spinner_dropdown_item, contactNumber);
-                if(!(sdk==Build.VERSION_CODES.KITKAT))
+                if (!(sdk == Build.VERSION_CODES.KITKAT))
                     mNumber.setAdapter(adapter);
 
                 List<String> contactName = new ArrayList<>(str);
-                Log.e("DisplayName Preference", "Result "  + contactName.size());
+                Log.e("DisplayName Preference", "Result " + contactName.size());
 
-                    contactName.removeAll(Collections.singleton(null));
+                contactName.removeAll(Collections.singleton(null));
 
                 Log.e("DisplayName Preference", "Result " + contactName.size());
 
@@ -82,17 +83,16 @@ public class Add_player extends AppCompatActivity {
                         new ArrayAdapter<String>(Add_player.this,
                                 android.R.layout.simple_spinner_dropdown_item, contactName);
 
-                if(!(sdk==Build.VERSION_CODES.KITKAT))
+                if (!(sdk == Build.VERSION_CODES.KITKAT))
                     mName.setAdapter(adapt);
 
             } else {
-
+                new ContactFetchTask().execute();
             }
         } catch (Exception e) {
             e.printStackTrace();
-           new ContactFetchTask().execute();
+            new ContactFetchTask().execute();
         }
-
 
 
         btnSave.setOnClickListener(new View.OnClickListener() {
@@ -104,10 +104,9 @@ public class Add_player extends AppCompatActivity {
                     String name = mName.getText().toString();
                     String number = mNumber.getText().toString();
 
-
                     new Save().execute(name, number);
                 } else {
-                    if(mName.length() == 0){
+                    if (mName.length() == 0) {
                         Toast.makeText(Add_player.this, "Please check the playerName field", Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -169,14 +168,13 @@ public class Add_player extends AppCompatActivity {
 */
                 cursorPhone.close();
 
-                return contact;
+
             }
-        }catch(Exception e){
+            return contact;
+        } catch (Exception e) {
             e.printStackTrace();
+            return null;
         }
-
-        return null;
-
 
     }
 
@@ -272,11 +270,10 @@ public class Add_player extends AppCompatActivity {
                 } else {
                     Toast.makeText(Add_player.this, "Save Denied! DataBase Error", Toast.LENGTH_SHORT).show();
                 }
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
-
 
 
     }
@@ -296,7 +293,7 @@ public class Add_player extends AppCompatActivity {
         @Override
         protected void onPostExecute(Set<String> strings) {
             super.onPostExecute(strings);
-            if(strings!=null) {
+            if (strings != null) {
                 addContactToAutoComplete(strings);
             }
         }
@@ -309,7 +306,7 @@ public class Add_player extends AppCompatActivity {
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putStringSet(fileName, contactCollection);
             editor.commit();
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -324,7 +321,7 @@ public class Add_player extends AppCompatActivity {
             SharedPreferences.Editor editor = preferences.edit();
             editor.putStringSet("key", display_Name);
             editor.apply();
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 

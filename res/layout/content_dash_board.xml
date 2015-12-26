@@ -10,384 +10,390 @@
     tools:context="cric_grab.ashok.android.cric_grap.DashBoard"
     tools:showIn="@layout/app_bar_dash_board">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/txtStatusAttendance"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:text="TODAY NO ATTENDANCE FOUND"
-            android:textColor="@color/Red"
-            android:textSize="15sp"
-            android:textStyle="bold"
-            android:typeface="serif"
-            android:visibility="gone" />
 
         <LinearLayout
-            android:id="@+id/linearHead"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@android:drawable/picture_frame"
             android:orientation="vertical">
 
+            <TextView
+                android:id="@+id/txtStatusAttendance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="TODAY NO ATTENDANCE FOUND"
+                android:textColor="@color/Red"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:typeface="serif"
+                android:visibility="gone" />
+
             <LinearLayout
+                android:id="@+id/linearHead"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="10dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/txtDate"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="0.15"
-                    android:gravity="center"
-                    android:padding="5dp"
-                    android:text="Date :"
-                    android:textColor="@color/Blueee"
-                    android:textSize="15sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/txtDateSet"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:gravity="left"
-                    android:padding="5dp"
-                    android:text="Todays Date"
-                    android:textColor="@color/Blueee"
-                    android:textSize="15sp"
-                    android:textStyle="bold" />
-
-                <Spinner
-                    android:id="@+id/spinDashSelect"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:spinnerMode="dropdown">
-
-                </Spinner>
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="5dp"
-                android:background="@color/LightGrey" />
-
-            <LinearLayout
-                android:id="@+id/entireDashBoard"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:visibility="visible">
+                android:background="@android:drawable/picture_frame"
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    android:orientation="vertical">
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
+                    <TextView
+                        android:id="@+id/txtDate"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:layout_gravity="center"
+                        android:layout_weight="0.15"
+                        android:gravity="center"
+                        android:padding="5dp"
+                        android:text="Date :"
+                        android:textColor="@color/Blueee"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
 
-                        <TextView
-                            android:id="@+id/txtTeamA"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:background="@drawable/action_button"
-                            android:padding="5dp"
-                            android:text="TEAM A"
-                            android:textAllCaps="true"
-                            android:textColor="@color/Black"
-                            android:textSize="15sp"
-                            android:textStyle="bold"
-                            android:typeface="serif" />
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:padding="5dp"
-                            android:text="VS"
-                            android:textColor="@color/Black"
-                            android:textSize="15sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/txtTeamB"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:background="@drawable/action_button"
-                            android:gravity="right"
-                            android:padding="5dp"
-                            android:text="TEAM B"
-                            android:textAllCaps="true"
-                            android:textColor="@color/Black"
-                            android:textSize="15sp"
-                            android:textStyle="bold" />
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="5dp"
-                        android:background="@color/AliceBlue" />
-
-                    <LinearLayout
-                        android:id="@+id/linearPresent"
-                        android:layout_width="match_parent"
+                    <TextView
+                        android:id="@+id/txtDateSet"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@android:drawable/list_selector_background"
-                        android:orientation="horizontal">
+                        android:layout_gravity="center"
+                        android:gravity="left"
+                        android:padding="5dp"
+                        android:text="Todays Date"
+                        android:textColor="@color/Blueee"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
 
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:padding="5dp"
-                            android:text="Total_Score"
-                            android:textColor="@color/Green"
-                            android:textSize="15sp"
-                            android:textStyle="bold"
-                            android:typeface="serif" />
-
-                        <TextView
-                            android:id="@+id/txtTotalScore"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="right"
-                            android:padding="5dp"
-                            android:textColor="@color/Green"
-                            android:textSize="15sp"
-                            android:textStyle="bold" />
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="5dp"
-                        android:background="@color/Bisque" />
-
-                    <LinearLayout
-
-                        android:layout_width="match_parent"
+                    <Spinner
+                        android:id="@+id/spinDashSelect"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:background="@android:drawable/list_selector_background"
-                        android:orientation="horizontal">
+                        android:layout_gravity="center"
 
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:padding="5dp"
-                            android:text="Total Over"
-                            android:textColor="@color/Green"
-                            android:textSize="15sp"
-                            android:textStyle="bold"
-                            android:typeface="serif" />
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:spinnerMode="dropdown">
 
-                        <TextView
-                            android:id="@+id/txtTotalOver"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="right"
-                            android:padding="5dp"
-                            android:textColor="@color/Green"
-                            android:textSize="15sp" />
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="5dp"
-                        android:background="@color/Bisque" />
-
-
-                    <LinearLayout
-                        android:id="@+id/linearAbsent"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@android:drawable/list_selector_background"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:padding="5dp"
-                            android:text="Ongoing Over"
-                            android:textColor="@color/Red"
-                            android:textSize="15sp"
-                            android:textStyle="bold"
-                            android:typeface="serif" />
-
-                        <TextView
-                            android:id="@+id/txtOngoingOver"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="right"
-                            android:padding="5dp"
-                            android:textColor="@color/Red"
-                            android:textSize="15sp" />
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="5dp"
-                        android:background="@color/Bisque" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@android:drawable/list_selector_background"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:padding="5dp"
-                            android:text="Score"
-                            android:textColor="@color/Black"
-                            android:textSize="15sp"
-                            android:textStyle="bold"
-                            android:typeface="serif" />
-
-                        <TextView
-                            android:id="@+id/txtscore"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="right"
-                            android:padding="5dp"
-                            android:textColor="@color/Black"
-                            android:textSize="15sp" />
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="5dp"
-                        android:background="@color/Bisque" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@android:drawable/list_selector_background"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:padding="5dp"
-                            android:text="Extras"
-                            android:textColor="@color/DarkOrange"
-                            android:textSize="15sp"
-                            android:textStyle="bold"
-                            android:typeface="serif" />
-
-                        <TextView
-                            android:id="@+id/txtExtras"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="right"
-                            android:padding="5dp"
-                            android:textColor="@color/DarkOrange"
-                            android:textSize="15sp" />
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="5dp"
-                        android:background="@color/Bisque" />
+                    </Spinner>
                 </LinearLayout>
 
-                <Button
-                    android:id="@+id/btnUploadData"
+                <View
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
-                    android:background="@android:drawable/list_selector_background"
-                    android:drawableRight="@android:drawable/ic_menu_upload"
-                    android:gravity="center"
-                    android:text="Upload to Google Cloud"
-                    android:textColor="@color/DarkGreen"
-                    android:textSize="14sp"
-                    android:typeface="serif" />
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/LightGrey" />
+
+                <LinearLayout
+                    android:id="@+id/entireDashBoard"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:visibility="visible">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/txtTeamA"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:background="@drawable/action_button"
+                                android:padding="5dp"
+                                android:text="TEAM A"
+                                android:textAllCaps="true"
+                                android:textColor="@color/Black"
+                                android:textSize="15sp"
+                                android:textStyle="bold"
+                                android:typeface="serif" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:padding="5dp"
+                                android:text="VS"
+                                android:textColor="@color/Black"
+                                android:textSize="15sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/txtTeamB"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:background="@drawable/action_button"
+                                android:gravity="right"
+                                android:padding="5dp"
+                                android:text="TEAM B"
+                                android:textAllCaps="true"
+                                android:textColor="@color/Black"
+                                android:textSize="15sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginTop="5dp"
+                            android:background="@color/AliceBlue" />
+
+                        <LinearLayout
+                            android:id="@+id/linearPresent"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@android:drawable/list_selector_background"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:padding="5dp"
+                                android:text="Total_Score"
+                                android:textColor="@color/Green"
+                                android:textSize="15sp"
+                                android:textStyle="bold"
+                                android:typeface="serif" />
+
+                            <TextView
+                                android:id="@+id/txtTotalScore"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="right"
+                                android:padding="5dp"
+                                android:textColor="@color/Green"
+                                android:textSize="15sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginTop="5dp"
+                            android:background="@color/Bisque" />
+
+                        <LinearLayout
+
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@android:drawable/list_selector_background"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:padding="5dp"
+                                android:text="Total Over"
+                                android:textColor="@color/Green"
+                                android:textSize="15sp"
+                                android:textStyle="bold"
+                                android:typeface="serif" />
+
+                            <TextView
+                                android:id="@+id/txtTotalOver"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="right"
+                                android:padding="5dp"
+                                android:textColor="@color/Green"
+                                android:textSize="15sp" />
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginTop="5dp"
+                            android:background="@color/Bisque" />
+
+
+                        <LinearLayout
+                            android:id="@+id/linearAbsent"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@android:drawable/list_selector_background"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:padding="5dp"
+                                android:text="Ongoing Over"
+                                android:textColor="@color/Red"
+                                android:textSize="15sp"
+                                android:textStyle="bold"
+                                android:typeface="serif" />
+
+                            <TextView
+                                android:id="@+id/txtOngoingOver"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="right"
+                                android:padding="5dp"
+                                android:textColor="@color/Red"
+                                android:textSize="15sp" />
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginTop="5dp"
+                            android:background="@color/Bisque" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@android:drawable/list_selector_background"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:padding="5dp"
+                                android:text="Score"
+                                android:textColor="@color/Black"
+                                android:textSize="15sp"
+                                android:textStyle="bold"
+                                android:typeface="serif" />
+
+                            <TextView
+                                android:id="@+id/txtscore"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="right"
+                                android:padding="5dp"
+                                android:textColor="@color/Black"
+                                android:textSize="15sp" />
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginTop="5dp"
+                            android:background="@color/Bisque" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@android:drawable/list_selector_background"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:padding="5dp"
+                                android:text="Extras"
+                                android:textColor="@color/DarkOrange"
+                                android:textSize="15sp"
+                                android:textStyle="bold"
+                                android:typeface="serif" />
+
+                            <TextView
+                                android:id="@+id/txtExtras"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="right"
+                                android:padding="5dp"
+                                android:textColor="@color/DarkOrange"
+                                android:textSize="15sp" />
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginTop="5dp"
+                            android:background="@color/Bisque" />
+                    </LinearLayout>
+
+                    <Button
+                        android:id="@+id/btnUploadData"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:background="@android:drawable/list_selector_background"
+                        android:drawableRight="@android:drawable/ic_menu_upload"
+                        android:gravity="center"
+                        android:text="Upload to Google Cloud"
+                        android:textColor="@color/DarkGreen"
+                        android:textSize="14sp"
+                        android:typeface="serif" />
+                </LinearLayout>
             </LinearLayout>
+
+            <!--  <Button
+                  android:id="@+id/btnAttendance"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_margin="5dp"
+                  android:background="@drawable/action_button"
+                  android:drawableRight="@android:drawable/ic_menu_add"
+                  android:gravity="center"
+                  android:text="Submit Attendance"
+                  android:textColor="@color/Black"
+                  android:textSize="14sp"
+                  android:typeface="serif" />
+
+              <Button
+                  android:id="@+id/btnHistory"
+                  android:layout_width="fill_parent"
+                  android:layout_height="match_parent"
+                  android:layout_margin="5dp"
+                  android:background="@drawable/action_button"
+                  android:drawableRight="@android:drawable/ic_menu_recent_history"
+                  android:gravity="center"
+                  android:text="History"
+                  android:textColor="@color/Black"
+                  android:textSize="14sp"
+                  android:typeface="serif" />
+
+              <Button
+                  android:id="@+id/btnCopyData"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_margin="5dp"
+                  android:background="@color/LightGreen"
+                  android:drawableRight="@android:drawable/stat_sys_download"
+                  android:gravity="center"
+                  android:onClick="copy_data"
+                  android:padding="10dp"
+                  android:text="Download Users Details"
+                  android:textColor="@color/Black"
+                  android:textSize="14sp"
+                  android:typeface="serif" />-->
+
+
         </LinearLayout>
-
-        <!--  <Button
-              android:id="@+id/btnAttendance"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:layout_margin="5dp"
-              android:background="@drawable/action_button"
-              android:drawableRight="@android:drawable/ic_menu_add"
-              android:gravity="center"
-              android:text="Submit Attendance"
-              android:textColor="@color/Black"
-              android:textSize="14sp"
-              android:typeface="serif" />
-
-          <Button
-              android:id="@+id/btnHistory"
-              android:layout_width="fill_parent"
-              android:layout_height="match_parent"
-              android:layout_margin="5dp"
-              android:background="@drawable/action_button"
-              android:drawableRight="@android:drawable/ic_menu_recent_history"
-              android:gravity="center"
-              android:text="History"
-              android:textColor="@color/Black"
-              android:textSize="14sp"
-              android:typeface="serif" />
-
-          <Button
-              android:id="@+id/btnCopyData"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:layout_margin="5dp"
-              android:background="@color/LightGreen"
-              android:drawableRight="@android:drawable/stat_sys_download"
-              android:gravity="center"
-              android:onClick="copy_data"
-              android:padding="10dp"
-              android:text="Download Users Details"
-              android:textColor="@color/Black"
-              android:textSize="14sp"
-              android:typeface="serif" />-->
-
-
-    </LinearLayout>
+    </ScrollView>
 
 
 </LinearLayout>

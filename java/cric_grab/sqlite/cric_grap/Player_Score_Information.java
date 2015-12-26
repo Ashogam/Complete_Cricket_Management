@@ -207,7 +207,7 @@ public class Player_Score_Information {
 
     public String combineScore(String innings, String given_date) throws JSONException {
 
-        String queryScore = "SELECT sum(SCORE) as TOTAL_SCORE FROM (SELECT PLAYER_NAME,BALL_NUMBER,SCORE ,'Regular' AS EXTRA_TYPE,INNINGS,CREATED_DATE FROM PLAYER_SCORE_INF UNION SELECT PLAYER_NAME,BALL_NUMBER,EXTRA_SCORE ,EXTRA_TYPE,INNINGS,CREATED_DATE FROM PLAYER_SCORE_EXTRAS) T1  WHERE INNINGS='" + innings + "' AND CREATED_DATE='" + given_date + "' ORDER BY CREATED_DATE,INNINGS,BALL_NUMBER";
+        String queryScore = "SELECT sum(SCORE) as TOTAL_SCORE FROM (SELECT PLAYER_NAME,BALL_NUMBER,SCORE ,'Regular' AS EXTRA_TYPE,INNINGS,CREATED_DATE FROM PLAYER_SCORE_INF UNION ALL SELECT PLAYER_NAME,BALL_NUMBER,EXTRA_SCORE ,EXTRA_TYPE,INNINGS,CREATED_DATE FROM PLAYER_SCORE_EXTRAS) T1  WHERE INNINGS='" + innings + "' AND CREATED_DATE='" + given_date + "' ORDER BY CREATED_DATE,INNINGS,BALL_NUMBER";
         Cursor cursor = sqLiteDatabase.rawQuery(queryScore, null);
         Log.e("CursorCount", cursor.getCount() + "");
         if (cursor.moveToFirst()) {
@@ -218,11 +218,55 @@ public class Player_Score_Information {
         }
     }
 
+    public JSONObject combineScoreAlone(String innings, String given_date,String mName) throws JSONException {
+
+        String queryScore = "SELECT sum(SCORE) as TOTAL_SCORE,count(BALL_NUMBER) as TOTAL_BALL FROM (SELECT PLAYER_NAME,BALL_NUMBER,SCORE ,'Regular' AS EXTRA_TYPE,INNINGS,CREATED_DATE FROM PLAYER_SCORE_INF UNION ALL SELECT PLAYER_NAME,BALL_NUMBER,EXTRA_SCORE ,EXTRA_TYPE,INNINGS,CREATED_DATE FROM PLAYER_SCORE_EXTRAS) T1  WHERE INNINGS='" + innings + "' AND CREATED_DATE='" + given_date + "' AND PLAYER_NAME='" + mName + "' ORDER BY CREATED_DATE,INNINGS,BALL_NUMBER";
+        Cursor cursor = sqLiteDatabase.rawQuery(queryScore, null);
+        Log.e("CursorCount", cursor.getCount() + "");
+        if (cursor.moveToFirst()) {
+            JSONObject jsonObject=new JSONObject();
+            Log.e("Score", cursor.getString(cursor.getColumnIndex("TOTAL_SCORE")));
+            Log.e("Score", cursor.getString(cursor.getColumnIndex("TOTAL_BALL")));
+            jsonObject.put("Score", cursor.getString(cursor.getColumnIndex("TOTAL_SCORE")));
+            jsonObject.put("Ball_Count",cursor.getString(cursor.getColumnIndex("TOTAL_BALL")));
+            return jsonObject;
+        } else {
+            return null;
+        }
+    }
+
     public JSONArray combineTableSet(String innings, String given_date) throws JSONException {
         JSONArray jsonArray = new JSONArray();
 
         // String query1="SELECT * FROM (SELECT PLAYER_NAME,'Actual' as SCORE_TYPE,BALL_NUMBER,SCORE,INNINGS,CREATED_DATE,NULL AS EXTRA_TYPE FROM PLAYER_SCORE_INF UNION SELECTPLAYER_NAME,'Extra',BALL_NUMBER,EXTRA_SCORE,INNINGS,CREATED_DATE,EXTRA_TYPE FROM PLAYER_SCORE_EXTRAS) T1 WHERE INNINGS='1' AND CREATED_DATE='2015/12/25' ORDER BY CREATED_DATE,INNINGS,BALL_NUMBER";
-        String query2 = "SELECT * FROM (SELECT PLAYER_NAME,BALL_NUMBER,SCORE ,'Regular' AS EXTRA_TYPE,INNINGS,CREATED_DATE FROM PLAYER_SCORE_INF UNION SELECT PLAYER_NAME,BALL_NUMBER,EXTRA_SCORE ,EXTRA_TYPE,INNINGS,CREATED_DATE FROM PLAYER_SCORE_EXTRAS) T1  WHERE INNINGS='" + innings + "' AND CREATED_DATE='" + given_date + "' ORDER BY CREATED_DATE,INNINGS,BALL_NUMBER";
+        String query2 = "SELECT * FROM (SELECT PLAYER_NAME,BALL_NUMBER,SCORE ,'Regular' AS EXTRA_TYPE,INNINGS,CREATED_DATE FROM PLAYER_SCORE_INF UNION ALL SELECT PLAYER_NAME,BALL_NUMBER,EXTRA_SCORE ,EXTRA_TYPE,INNINGS,CREATED_DATE FROM PLAYER_SCORE_EXTRAS) T1  WHERE INNINGS='" + innings + "' AND CREATED_DATE='" + given_date + "' ORDER BY CREATED_DATE,INNINGS,BALL_NUMBER";
+
+        //String query="SELECT * FROM (SELECT "+DBHelper.PLAYER_NAME+",'Actual' as SCORE_TYPE,"+DBHelper.BALL_NUMBER+",SCORE,INNINGS,CREATED_DATE FROM "+DBHelper.TABLE_NAME+" UNION ALL SELECT PLAYER_NAME,'Extra',BALL_NUMBER,EXTRA_SCORE,INNINGS,CREATED_DATE FROM "+DBHelper.TABLE_EXTRA_NAME+") T1 WHERE INNINGS='"+innings+"' AND CREATED_DATE='"+given_date+"' ORDER BY CREATED_DATE,INNINGS,BALL_NUMBER";
+        Cursor cursor = sqLiteDatabase.rawQuery(query2, null);
+        Log.d("Mine", cursor.getCount() + "");
+        if (cursor.moveToFirst()) {
+            do {
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("Player_Name", cursor.getString(cursor.getColumnIndex(DBHelper.PLAYER_NAME)));
+                jsonObject.put("BALL_NUM", cursor.getString(cursor.getColumnIndex(DBHelper.BALL_NUMBER)));
+                jsonObject.put("SCORE", cursor.getString(cursor.getColumnIndex(DBHelper.SCORE)));
+                jsonObject.put("INNINGS", cursor.getString(cursor.getColumnIndex(DBHelper.INNINGS)));
+                jsonObject.put("Type", cursor.getString(cursor.getColumnIndex(DBHelper.EXTRA_TYPE)));
+                jsonArray.put(jsonObject);
+            } while (cursor.moveToNext());
+            cursor.close();
+            Log.e("Mine Json", jsonArray.toString());
+            return jsonArray;
+        } else {
+            return null;
+        }
+    }
+
+    public JSONArray combineTableAloneSet(String innings, String given_date,String mName) throws JSONException {
+        JSONArray jsonArray = new JSONArray();
+
+        // String query1="SELECT * FROM (SELECT PLAYER_NAME,'Actual' as SCORE_TYPE,BALL_NUMBER,SCORE,INNINGS,CREATED_DATE,NULL AS EXTRA_TYPE FROM PLAYER_SCORE_INF UNION SELECTPLAYER_NAME,'Extra',BALL_NUMBER,EXTRA_SCORE,INNINGS,CREATED_DATE,EXTRA_TYPE FROM PLAYER_SCORE_EXTRAS) T1 WHERE INNINGS='1' AND CREATED_DATE='2015/12/25' ORDER BY CREATED_DATE,INNINGS,BALL_NUMBER";
+        String query2 = "SELECT * FROM (SELECT PLAYER_NAME,BALL_NUMBER,SCORE ,'Regular' AS EXTRA_TYPE,INNINGS,CREATED_DATE FROM PLAYER_SCORE_INF UNION ALL SELECT PLAYER_NAME,BALL_NUMBER,EXTRA_SCORE ,EXTRA_TYPE,INNINGS,CREATED_DATE FROM PLAYER_SCORE_EXTRAS) T1  WHERE INNINGS='" + innings + "' AND CREATED_DATE='" + given_date + "' AND PLAYER_NAME='" + mName + "' ORDER BY CREATED_DATE,INNINGS,BALL_NUMBER";
 
         //String query="SELECT * FROM (SELECT "+DBHelper.PLAYER_NAME+",'Actual' as SCORE_TYPE,"+DBHelper.BALL_NUMBER+",SCORE,INNINGS,CREATED_DATE FROM "+DBHelper.TABLE_NAME+" UNION ALL SELECT PLAYER_NAME,'Extra',BALL_NUMBER,EXTRA_SCORE,INNINGS,CREATED_DATE FROM "+DBHelper.TABLE_EXTRA_NAME+") T1 WHERE INNINGS='"+innings+"' AND CREATED_DATE='"+given_date+"' ORDER BY CREATED_DATE,INNINGS,BALL_NUMBER";
         Cursor cursor = sqLiteDatabase.rawQuery(query2, null);
